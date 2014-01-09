@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    </head>
+    <body>
+
+<script src="rStats.js"></script>
+
+<script>
+
+var rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)', over: 16 },
+        raf: { caption: 'Time since last rAF (ms)' },
+        fps: { caption: 'Framerate (FPS)', below: 30 },
+        action1: { caption: 'Render action #1 (ms)' },
+        render: { caption: 'WebGL Render (ms)' }
+    },
+    groups: [
+        { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+        { caption: 'Frame Budget', values: [ 'frame', 'action1', 'render' ] }
+    ],
+    fractions: [
+        { base: 'frame', steps: [ 'action1', 'render' ] }
+    ]
+} );
+
+function delay() {
+    var d = Math.random() * 10;
+    var now = Date.now();
+    var s = now + d;
+    while( now < s ) {
+        now = Date.now();
+    }
+}
+
+function render() {
+    
+    rS( 'frame' ).start();
+    rS( 'rAF' ).tick();
+    rS( 'FPS' ).frame();
+    
+    rS( 'action1' ).start();
+    delay();
+    rS( 'action1' ).end();
+    
+    rS( 'render' ).start();
+    delay();
+    rS( 'render' ).end();
+    
+    rS( 'frame' ).end();
+    rS().update();
+    
+    requestAnimationFrame( render );
+
+}
+
+render();
+
+</script>
+
+    </body>
+</html>

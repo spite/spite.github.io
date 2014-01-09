@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+        <style>
+        *{ box-sizing: border-box; -moz-box-sizing: border-box; font-family: 'Roboto', serif; font-weight: 300; margin: 0; padding: 0; color: #222; text-shadow: 0 1px 0 rgba( 255, 255, 255, .6 ); font-weight: 300; line-height: 1.4em;}
+        body{ font-size: 14px; line-height: 18px; padding: 20px; background-image: url( subtle_white_feathers.png ); background-repeat: repeat;}
+        section{ width: 100%; padding: 0 20px; max-width: 800px; margin: 0 auto;}
+        #block{ position: absolute; left: 0; top: 0; width: 64px; height: 64px; background-color: #b70000; display: block; -webkit-transition: -webkit-transform 16ms linear; }
+        #container{ position: relative; height: 85px; background-color: rgba( 20, 20, 20, .1 ); margin-bottom: 14px;}
+        h1{ margin-bottom: 20px; font-size: 34px;}
+        h2{ margin: 30px 0 }
+        button, .button{ padding: 5px 10px; background-color: #ddd; border: 1px solid #ccc; text-align: center; border-radius: 3px; color: #444; font-weight: 400; text-transform: uppercase;}
+        button:hover, .button:hover{ color: #000; background-color: #eee;}
+        a{ color: inherit;font-weight: 300; }
+        a:hover{ color: #b70000; border-bottom: 1px dashed rgba(183,0,0,.25); }
+        code{ font-family: 'Inconsolata', monospace; font-size: 13px; line-height: 1.2em; white-space: pre-wrap;  color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; border-radius: 4px; margin-bottom: 10px; width: 100%;}
+        code b{ font-family: inherit; color: inherit; font-weight: bold; color: #0000a6;}
+        code span.comment{ font-family: inherit; color: inherit; font-weight: inherit; color: #00b700;}
+        p{ margin-bottom: 1em;}
+        b{ font-weight: 500;}
+        hr{ margin: 20px 0;}
+        blockquote{ font-style: italic; padding: 10px; background-color: rgba( 255, 229, 56, .2 ); color: #b70000; margin-bottom: 14px;}
+        blockquote b{ color: inherit;}
+        ul{ margin-left: 1.4em ; margin-bottom: 1em;}
+        span.code{font-family: 'Inconsolata', monospace; font-size: 13px; color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; line-height: 0; height: 1em;}
+        p a{ color: #b70000; text-decoration: none;}
+        div.image{ overflow: hidden; width: 100%; height: 200px;}
+        iframe{ width: 100%; height: 100%; border: none; background-color: #fff;}
+        div.placeholder{ width: 100%; margin-bottom: 1em; border: 1px solid #999; box-shadow: 0 0 5px rgba( 0, 0, 0, .2 ); display: block; position: relative; cursor: pointer; background-color: #eee;}
+        div.placeholder:hover{ background-color: #fff;}
+        div.placeholder span{ position: absolute; left: 50%; margin-left: -5em; top: 50%; margin-top: -1em; width: 10em; height: 2em; text-align: center; line-height: 2em; background-color: rgba( 255,255,255,.6); border-radius: 5px; }
+        div.placeholder:hover span{ color: #222; font-weight: 400;}
+        </style>
+    </head>
+    <body>
+    <section>
+
+    <h1>rStats v0.1</h1>
+    <hr/>
+    <div class="image">
+        <img src="header.jpg" />
+    </div>
+    <h2>Welcome!</h2>
+    <p>rStats aims to provide a way of measuring and visualizing performance of your code, mainly in apps based on an update loop, like games or interactive experiences.</p>
+    <p>It came to be when coding the <a href="http://www.clicktorelease.com/code/bumpy-metaballs/" rel="external">Bumpy metaballs</a> and <a href="http://snwbx.com" rel="external">SnowBox</a>. I realised that the performance monitors I was using (the <i>de facto</i> standard <a href="https://github.com/mrdoob/stats.js/" rel="external" >mrdoob stats.js</a> and the DevTools FPS Meter) are useful to keep an eye on your framerate and check if you're dropping frames. But when once you're doing great and keeping it under 16ms, how much are you really using? Is my shader executing in 15.99ms, or is it a way smaller fraction of the frame time? Can I have an idea of how much headroom have I still left?</p>
+    <p>So rStats started as a revamp of the original stats performance monitor, adding <span class="code">performance.now()</span> for finer measuring. After the naive measuring, I started adding more features. It takes afer <a href="https://github.com/mrdoob/stats.js/" rel="external" >mrdoob stats.js</a>, <a href="https://github.com/jeromeetienne/threex.rendererstats" rel="external" >Jerome Etienne's threex.rendererstats</a> and <a href="http://benvanik.github.io/WebGL-Inspector/" rel="external">Ben Vanik's WebGL Inspector</a>. It works on Chrome, Firefox, Safari, Opera; in OSX, Android, Windows.</p>
+    <p>Click here to see a <a href="demo.html" rel="external">Demo</a>, but don't forget to read the whole page if you're interested!</p>
+    <blockquote>Requires WebGL to run</blockquote>
+    <p><a href="demo.html" rel="external" class="button">Run Demo</a></p>
+    <h2>Let's get started</h2>
+    <p>To start, include the script in your code</p>
+    <code>&lt;script src="rStats.js"&gt;&lt;/script&gt;</code>
+    <p>This loads the rStats object, and the you can instantiate it:</p>
+    <code>var rS = new rStats();</code>
+    <p>This is the simplest way of creating an rStats object. Using it is as simple as placing the elements you'd like to measure in your update/render method:</p>
+    <code>function render() {
+    
+    rS( 'frame' ).start();
+    
+    <span class="comment">/* Do rendery stuff */</span>
+    
+    rS( 'frame' ).end();
+    rS().update();
+
+    requestAnimationFrame( render );
+
+}</code>
+    <p>In this example, we use use rStats to simply measure and display the frames per second (FPS).</p>
+    <div id="example1-placeholder" class="placeholder" style="height: 60px"></div>
+    <blockquote>Notice that the value for frame is ~0. Since we're not doing anything in the function, it's exactly what we should expect.</blockquote>
+    <blockquote>Also, it's worth mentioning that right now the graphs slowly acommodate to the max value: the scale grows and shrinks over time to adjust the vertical axis to the maximum value. Good idea? Bad idea? It might make sense to specify a autoAdjust parameter for all graphs, or for specific values?</blockquote>
+    <p><span class="code">rS()</span> returns the rStats object directly, and has a <span class="code">.update()</span> method that redraws the widget. Call this method at the end of your update function. <span class="code">rS( id )</span> returns a counter object. A counter has five updating methods:</p>
+    <ul>
+        <li><b>start()</b>: starts counting performance time.</li>
+        <li><b>end()</b>: stops counting performance time and accumulates the ellapsed time since <b>start()</b> was called.<br/><i>Good to measure render or texture update time.</i></li>
+        <li><b>tick()</b>: accumulates the ellapsed time since <b>tick()</b> was last called. It's a shortcut for <b>end(); start();</b><br/><i>Good to measure times of loops or time between calls.</i></li>
+        <li><b>frame()</b>: accumulates the ellapsed time and stores the average over 1 second.<br/><i>Good for ... well, framerate, for instance.</i></li>
+        <li><b>set( v )</b>: stores the specificied v value.<br/><i>Good to store specific values, like drawCalls or memory size.</i></li> 
+    </ul>
+    <p>Additionally, <span class="code">.value()</span> returns the current acumulated value for the counter.</p>
+    <p>Let's see a more extensive example:</p>
+    <code>function render() {
+    
+    rS( 'frame' ).start();
+    rS( 'rAF' ).tick();
+    rS( 'FPS' ).frame();
+    
+    rS( 'action1' ).start();
+    <span class="comment">/* Perform action #1 */</span>
+    rS( 'action1' ).end();
+    
+    rS( 'render' ).start();
+    <span class="comment">/* Perform render */</span>
+    rS( 'render' ).end();
+    
+    rS( 'frame' ).end();
+    rS().update();
+    
+    requestAnimationFrame( render );
+
+}</code>
+    <div id="example2-placeholder" class="placeholder" style="height: 100px"></div>
+    <p>In this example, we're using</p>
+    <ul>
+        <li><b>rS( 'frame' ).start()/end()</b> to measure the actual execution time of our render method</li>
+        <li><b>rS( 'rAF' ).tick()</b> to measure how close to 16ms is our requestAnimationFrame requests being triggered</li>
+        <li><b>rS( 'FPS' ).frame()</b> to count the framerate (it's directly related to the rAF value, but we can calculate it independently)</li>
+        <li><b>rS( 'action1' ).start()/end()</b> and <b>rS( 'render' ).start()/end()</b> to measure execution time of those parts of the render</li>
+    </ul>
+    <p>That's it. With these examples you can add all the counter you want and measure performance for anything you want.</p>
+    <h2>Cleaning up a bit</h2>
+    <p>Using short ids like <span class="code">rAF</span> or <span class="code">glCall</span> is useful when writing code, but it makes the widget look a bit awful. You can add captions for your variables when creating the rStats object:</p>
+    <code>var rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)' },
+        raf: { caption: 'Time since last rAF (ms)' },
+        fps: { caption: 'Framerate (FPS)' },
+        action1: { caption: 'Render action #1 (ms)' },
+        render: { caption: 'WebGL Render (ms)' }
+    }
+} );</code>
+    <div id="example3-placeholder" class="placeholder" style="height: 100px"></div>
+    <p>But wait, we can do even better. We can add alarms to quickly identify potential problems in the values we're monitoring. You can set up an alarm (the graph and the caption turn red) when values go over or below a specified threshold:</p>
+ <code>var rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)', <b>over: 16</b> },
+        raf: { caption: 'Time since last rAF (ms)' },
+        fps: { caption: 'Framerate (FPS)', <b>below: 30</b> },
+        action1: { caption: 'Render action #1 (ms)' },
+        render: { caption: 'WebGL Render (ms)' }
+    }
+} );</code>
+    <div id="example4-placeholder" class="placeholder" style="height: 100px"></div>
+    <blockquote>Should the colour be configurable? What else do you think should be adjustable via parameters?></blockquote>
+    <p>With these two changes, we get an alarm if the value <span class="code">frame</span> is over 16ms, which means we're exceeding our frame budget and we're starting to drop frames. Similarly, we get an alarm if the value <span class="code" >FPS</span> is below 30, which would mean we're dropping so much frames we'll have a noticeable degraded experience. You can change this value to your acceptable framerate threshold :)</p>
+    <p><span class="code">values</span> is an object with the ids for the counters and their properties. The ids are case-insensitive. You provide <span class="code">caption</span>, <span class="code">below</span> and <span class="code">over</span>.</p>
+    <blockquote>Hopefully there'll be more values, like <b>min</b> and <b>max</b> values for the graph, <b>colour</b>. What else can you think of?</blockquote>
+    <p>Even better, we can add grouping, so values are clustered in categories:</p>
+<code>var rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)', over: 16 },
+        raf: { caption: 'Time since last rAF (ms)' },
+        fps: { caption: 'Framerate (FPS)', below: 30 },
+        action1: { caption: 'Render action #1 (ms)' },
+        render: { caption: 'WebGL Render (ms)' }
+    },
+    <b>groups: [
+        { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+        { caption: 'Frame Budget', values: [ 'frame', 'action1', 'render' ] }
+    ]</b>
+} );</code>
+    <div id="example5-placeholder" class="placeholder" style="height: 150px" ></div>
+    <p>In this case, we group framerate-related values, and performance-related values.</p>
+    <h2>Let's extract some useful data from our values</h2>
+    <p>Since we're going to be measuring performance/executing time for different processes that can be split in smaller actions, it might be interesting to see the percentage of the whole time that each step is taking.</p>
+<code>var rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)', over: 16 },
+        raf: { caption: 'Time since last rAF (ms)' },
+        fps: { caption: 'Framerate (FPS)', below: 30 },
+        action1: { caption: 'Render action #1 (ms)' },
+        render: { caption: 'WebGL Render (ms)' }
+    },
+    groups: [
+        { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+        { caption: 'Frame Budget', values: [ 'frame', 'action1', 'render' ] }
+    ],
+    <b>fractions: [
+        { base: 'frame', steps: [ 'action1', 'render' ] }
+    ]</b>
+} );</code> 
+    <div id="example6-placeholder" class="placeholder" style="height: 170px" ></div>
+    <p>With this, we're telling rStats to add a stacked area chart: the value of the counter specified in <span class="code">base</span> (in this case, <span class="code">frames</span>) is the 100%, and the values for the counters in <span class="code">steps</span> (<span class="code">action1</span> and <span class="code">render</span>) will be scaled to that base.</p>
+    <h2>How do I add other counters and values?</h2>
+    <p>It's as easy as deciding what do you want to measure and adding calls in your code. Wrap methods and statements between <span class="code">start()</span> and <span class="code">end()</span> to measure execution time. Use <span class="code">set()</span> to store values and plot them.</p>
+    <p>Also, there's the possibility of adding plugins to your rStats object. So far there's one for three.js, and a very basic one for WebGL. Check the <a href="rStats.extras.js" >rStats.extras.js</a> to get an idea of what this does.</p>
+    <p>Create your rStats object as usual, and add a plugins property:</p>
+    <code>glS = new glStats(); <span class="comment">// init at any point</span>
+tS = new threeStats( renderer ); <span class="comment">// init after WebGLRenderer is created</span>
+
+rS = new rStats( {
+    values: {
+        frame: { caption: 'Total frame time (ms)', over: 16 },
+        fps: { caption: 'Framerate (FPS)', below: 30 },
+        calls: { caption: 'Calls (three.js)', over: 3000 },
+        raf: { caption: 'Time since last rAF (ms)' },
+        rstats: { caption: 'rStats update (ms)' }
+    },
+    groups: [
+        { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+        { caption: 'Frame Budget', values: [ 'frame', 'texture', 'setup', 'render' ] }
+    ],
+    fractions: [
+        { base: 'frame', steps: [ 'action1', 'render' ] }
+    ],
+    <b>plugins: [
+        tS,
+        glS
+    ]</b>
+} );</code>
+    <p>And update the render method. The three.js plugin is transparent, but the WebGL one needs the start of the frame to be signaled (it resets the counters).</p>
+    <code>function render() {
+
+    rS( 'frame' ).start();
+    <b>glS.start();</b>
+
+    rS( 'frame' ).start();
+    rS( 'rAF' ).tick();
+    rS( 'FPS' ).frame();
+    
+    rS( 'action1' ).start();
+    <span class="comment">/* Perform action #1 */</span>
+    rS( 'action1' ).end();
+    
+    rS( 'render' ).start();
+    <span class="comment">/* Perform render */</span>
+    rS( 'render' ).end();
+    
+    rS( 'frame' ).end();
+    rS().update();
+    
+    requestAnimationFrame( render );
+
+}</code>
+    <div id="example7-placeholder" class="placeholder" style="height: 450px"></div>
+    <h2>Ok. Is that it?</h2>
+    <p>Yes, so far it is. I'd like to know everyone's opinion and suggestions!</p>
+    <blockquote>Ideas? Suggestions? Hit me on <a href="http://www.twitter.com/thespite" rel="external">twitter</a> or <a href="mailto:the.spite@gmail.com" rel="external">gmail</a>!</blockquote>
+    <hr/>
+    <p>Get it from github <a href="https://github.com/thingsinjars/devtools-extension" rel="external">thingsinjars/devtools-extension</a>.<br/>
+        Jaume Sanchez | <a href="http://www.clicktorelease.com" rel="external">http://www.clicktorelease.com</a></p>
+
+</section>
+
+<script>
+
+[].slice.call( document.querySelectorAll( 'a[rel=external]' ), 0 ).forEach( function( a ) {
+    a.addEventListener( 'click', function( e ) {
+        window.open( this.href, '_blank' );
+        e.preventDefault();
+    }, false );
+} );
+
+function addExample( id ) {
+    var el = document.getElementById( id + '-placeholder' );
+    el.style.backgroundImage = 'url(' + id + '.png)';
+    el.innerHTML = '<span>Click to see demo</span>';
+    el.addEventListener( 'click', function() {
+        el.innerHTML = '';
+        var frame = document.createElement( 'iframe' );
+        frame.src = id + '.html';
+        el.appendChild( frame );
+    } );
+}
+
+addExample( 'example1' );
+addExample( 'example2' );
+addExample( 'example3' );
+addExample( 'example4' );
+addExample( 'example5' );
+addExample( 'example6' );
+addExample( 'example7' );
+
+</script>
+
+</html>

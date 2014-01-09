@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    </head>
+    <body>
+
+<script src="rStats.js"></script>
+
+<script>
+
+var rS = new rStats();
+
+function render() {
+    
+    rS( 'frame' ).start();
+    
+    /* Do rendery stuff */
+    
+    rS( 'frame' ).end();
+    rS().update();
+
+    requestAnimationFrame( render );
+
+}
+
+render();
+
+</script>
+
+    </body>
+</html>

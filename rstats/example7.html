@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <style>
+        *{ box-sizing: border-box;}
+        body{ overflow: hidden;}
+        #container{ position: absolute; left: 0; top: 0; right: 0; bottom: 0;}
+        </style>
+    </head>
+    <body>
+        <div id="container" ></div>
+
+<script src="rStats.js"></script>
+<script src="rStats.extras.js"></script>
+<script src="three.min.js"></script>
+
+<script>
+
+var rS, glS, tS;
+var renderer, scene, camera;
+
+window.addEventListener( 'load', function() {
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+    window.addEventListener( 'resize', function() {
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    } );
+
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 10, 1000 );
+    camera.position.z = 30;
+    scene.add( camera );
+
+    var sphere = new THREE.Mesh( new THREE.IcosahedronGeometry( 10, 3 ), new THREE.MeshNormalMaterial() );
+    scene.add( sphere );
+    camera.lookAt( sphere.position );
+
+    glS = new glStats(); // init at any point
+    tS = new threeStats( renderer ); // init after WebGLRenderer is created
+
+    rS = new rStats( {
+        values: {
+            frame: { caption: 'Total frame time (ms)', over: 16 },
+            fps: { caption: 'Framerate (FPS)', below: 30 },
+            calls: { caption: 'Calls (three.js)', over: 3000 },
+            raf: { caption: 'Time since last rAF (ms)' },
+            rstats: { caption: 'rStats update (ms)' }
+        },
+        groups: [
+            { caption: 'Framerate', values: [ 'fps', 'raf' ] },
+            { caption: 'Frame Budget', values: [ 'frame', 'texture', 'setup', 'render' ] }
+        ],
+        fractions: [
+            { base: 'frame', steps: [ 'action1', 'render' ] }
+        ],
+        plugins: [
+            tS,
+            glS
+        ]
+    } );
+
+    render();
+
+} );
+
+function delay() {
+    var d = Math.random() * 10;
+    var now = Date.now();
+    var s = now + d;
+    while( now < s ) {
+        now = Date.now();
+    }
+}
+
+function render() {
+    
+    rS( 'frame' ).start();
+    glS.start();
+
+    rS( 'frame' ).start();
+    rS( 'rAF' ).tick();
+    rS( 'FPS' ).frame();
+    
+    rS( 'action1' ).start();
+    delay();
+    rS( 'action1' ).end();
+    
+    rS( 'render' ).start();
+    delay();
+    renderer.render( scene, camera );
+    rS( 'render' ).end();
+    
+    rS( 'frame' ).end();
+    rS().update();
+    
+    requestAnimationFrame( render );
+
+}
+
+</script>
+
+    </body>
+</html>
