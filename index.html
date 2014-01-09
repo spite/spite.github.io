@@ -1,23 +1,108 @@
-<!doctype html>
-<html lang="en">
-	<head>
+<!DOCTYPE html>
+<html>
+    <head>
 		<title>spite GitHub Pages</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			*{ box-sizing: border-box; margin: 0; padding: 0 }
-			body {
-				color: #ffffff;
-				font-family: tahoma;
-				font-size:13px;
-				background-color: #222;
-				margin: 0px;
-			}
-		</style>
-	</head>
-	<body>
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+        <style>
+        *{ box-sizing: border-box; -moz-box-sizing: border-box; font-family: 'Roboto', serif; font-weight: 300; margin: 0; padding: 0; color: #222; text-shadow: 0 1px 0 rgba( 255, 255, 255, .6 ); font-weight: 300; line-height: 1.4em;}
+        body{ font-size: 14px; line-height: 18px; padding: 20px; background-image: url( assets/subtle_white_feathers.png ); background-repeat: repeat;}
+        section{ width: 100%; padding: 0 20px; max-width: 800px; margin: 0 auto;}
+        #block{ position: absolute; left: 0; top: 0; width: 64px; height: 64px; background-color: #b70000; display: block; -webkit-transition: -webkit-transform 16ms linear; }
+        #container{ position: relative; height: 85px; background-color: rgba( 20, 20, 20, .1 ); margin-bottom: 14px;}
+        h1{ margin-bottom: 20px; font-size: 34px;}
+        h2{ margin: 40px 0 10px 0 }
+        button, .button{ padding: 5px 10px; background-color: #ddd; border: 1px solid #ccc; text-align: center; border-radius: 3px; color: #444; font-weight: 400; text-transform: uppercase;}
+        button:hover, .button:hover{ color: #000; background-color: #eee;}
+        a{ color: inherit;font-weight: 300; }
+        a:hover{ color: #b70000; }
+        code{ font-family: 'Inconsolata', monospace; font-size: 13px; line-height: 1.2em; white-space: pre-wrap;  color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; border-radius: 4px; margin-bottom: 10px; width: 100%;}
+        code b{ font-family: inherit; color: inherit; font-weight: bold; color: #0000a6;}
+        code span.comment{ font-family: inherit; color: inherit; font-weight: inherit; color: #00b700;}
+        p{ margin-bottom: 1em;}
+        b{ font-weight: 500;}
+        hr{ margin: 20px 0;}
+        blockquote{ font-style: italic; padding: 10px; background-color: rgba( 255, 229, 56, .2 ); color: #b70000; margin-bottom: 14px;}
+        blockquote b{ color: inherit;}
+        ul{ margin-left: 1.4em ; margin-bottom: 1em;}
+        span.code{font-family: 'Inconsolata', monospace; font-size: 13px; color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; line-height: 0; height: 1em;}
+        p a, li a{ color: #b70000; text-decoration: none;}
+        div.image{ overflow: hidden; width: 100%; height: 200px; margin-bottom: 1em;}
+        iframe{ width: 100%; height: 100%; border: none; background-color: #fff;}
+        div.placeholder{ width: 100%; margin-bottom: 1em; border: 1px solid #999; box-shadow: 0 0 5px rgba( 0, 0, 0, .2 ); display: block; position: relative; cursor: pointer; background-color: #eee;}
+        div.placeholder:hover{ background-color: #fff;}
+        div.placeholder span{ position: absolute; left: 50%; margin-left: -5em; top: 50%; margin-top: -1em; width: 10em; height: 2em; text-align: center; line-height: 2em; background-color: rgba( 255,255,255,.6); border-radius: 5px; }
+        div.placeholder:hover span{ color: #222; font-weight: 400;}
+        </style>
+    </head>
 
-		<p>Hello World!</p>
+   <body>
+	<section>
+		<h1>spite.github.io</h1>
+		<hr/>
+		<h2>rStats</h2>
+		<p>A new JavaScript Performance Monitor.</p>
+		<ul>
+			<li>GitHub page: <a href="https://github.com/spite/rstats" >https://github.com/spite/rstats</a></li>
+			<li>Introduction and Demo: <a href="http://local-clicktorelease.com/blog/loading-sounds-faster-using-html5-web-audio-api/">Introduction to rStats</a></li>
+		</ul>
+		<h2>Generative and reactive geometry with JavaScript and WebGL<br/>MIRA Lab 2013 Workshop</h2>
+		<p>Support material for the MIRA Lab Workshop.</p>
+		<div class="image">
+        	<img src="snapshots/mira-lab-2013.jpg" />
+    	</div>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/mira-lab-2013" >https://github.com/spite/mira-lab-2013</a></li>
+			<li>Demo: <a href="mira-lab-2013/">Part 9: generative geometry, audio reactive, GLSL shading</a></li>
+		</ul>
+		<h2>ConcatSoundLoader</h2>
+		<p>Concatenated Sound Files Loader | Typed Arrays and Web Audio API</p>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/ConcatSoundLoader" >https://github.com/spite/ConcatSoundLoader</a></li>
+			<li>Blog post and Demo: <a href="http://local-clicktorelease.com/blog/loading-sounds-faster-using-html5-web-audio-api/">Loading sound files faster using Array Buffers and Web Audio API</a></li>
+		</ul>
+		<h2>Getting started with 3D graphics in the browser with WebGL and three.js<br/>Barcelona.JS March 2013</h2>
+		<p>Add 3D content to your web pages or create fully immersive experiences with ease. Learn how to set up a scene, generate or load models and render them interactively.</p>
+		<p>This is the code used for the talk for the March 2013 <a href="http://barcelonajs.org/">Barcelona.JS</a> meet up.</p>
+		<div class="image">
+        	<img src="snapshots/gettings-started-threejs.jpg" />
+    	</div>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/getting-started-threejs" >https://github.com/spite/getting-started-threejs</a></li>
+			<li>Demo: <a href="getting-started-threejs/">Showcase of three.js rendering features</a></li>
+		</ul>
+		<h2>SolariDisplay - A Split-Flap Display with CSS and JavaScript</h2>
+		<p>Library to create a Split-Flap Display, or Solari Board.</p>
+		<div class="image">
+        	<img src="snapshots/solari-display.jpg" />
+    	</div>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/SolariDisplay" >https://github.com/spite/SolariDisplay</a></li>
+			<li>Blog post and Demo: <a href="http://www.clicktorelease.com/blog/split-flap-display/">Split-flap display with CSS and JavaScript</a></li>
+		</ul>
+		<h2>CCapture.js - A library to capture canvas-based animations</h2>
+		<p>CCapture.js is a library to help capturing animations created with HTML5 canvas at a fixed framerate.</p>
+		<ul>
+			<li>GitHub page: <a href="https://github.com/spite/ccapture.js" >https://github.com/spite/ccapture.js</a></li>
+			<li>Demo: <a href="http://www.clicktorelease.com/code/conway3d_ccapture/">CCapture.js with Game of Life 3D</a></li>
+		</ul>
+		<h2>GSVPano.js - Google Street View Panorama lib</h2>
+		<p>Library to help requesting and stitching Google Street View panoramas.</p>
+		<blockquote>Sadly, I've been requested by the Maps team to remove the library, since it was enabling people to break Google's Terms of Service. Which is true, but also an intrinsic problem with the only purpose of the library. Let's hope in a very near future the Google Maps API will provide a very similar feature.</blockquote>
+		<div class="image">
+        	<img src="snapshots/gsvpanojs.jpg" />
+    	</div>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/GSVPano.js" >https://github.com/spite/GSVPano.js</a></li>
+			<li>Demo: <a href="http://www.clicktorelease.com/code/street/">Google Street Viewer</a></li>
+			<li>Demo: <a href="http://www.clicktorelease.com/code/streetViewReflectionMapping/">Floating Shiny Knot</a></li>
+		</ul>
+		 <hr/>
+    <p>Get it from github <a href="https://github.com/thingsinjars/devtools-extension" rel="external">thingsinjars/devtools-extension</a>.<br/>
+        Jaume Sanchez | <a href="http://www.clicktorelease.com" rel="external">http://www.clicktorelease.com</a></p>
 
-	</body>
+	</section>
+ </body>
 </html>
