@@ -15,7 +15,7 @@
         button, .button{ padding: 5px 10px; background-color: #ddd; border: 1px solid #ccc; text-align: center; border-radius: 3px; color: #444; font-weight: 400; text-transform: uppercase;}
         button:hover, .button:hover{ color: #000; background-color: #eee;}
         a{ color: inherit;font-weight: 300; }
-        a:hover{ color: #b70000; border-bottom: 1px dashed rgba(183,0,0,.25); }
+        p a:hover{ color: #b70000; border-bottom: 1px dashed rgba(183,0,0,.25); }
         code{ font-family: 'Inconsolata', monospace; font-size: 13px; line-height: 1.2em; white-space: pre-wrap;  color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; border-radius: 4px; margin-bottom: 10px; width: 100%;}
         code b{ font-family: inherit; color: inherit; font-weight: bold; color: #0000a6;}
         code span.comment{ font-family: inherit; color: inherit; font-weight: inherit; color: #00b700;}
@@ -27,7 +27,7 @@
         ul{ margin-left: 1.4em ; margin-bottom: 1em;}
         span.code{font-family: 'Inconsolata', monospace; font-size: 13px; color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; line-height: 0; height: 1em;}
         p a{ color: #b70000; text-decoration: none;}
-        div.image{ overflow: hidden; width: 100%; height: 200px;}
+        div.image{ overflow: hidden; width: 100%; height: 200px; margin-bottom: 1em;}
         iframe{ width: 100%; height: 100%; border: none; background-color: #fff;}
         div.placeholder{ width: 100%; margin-bottom: 1em; border: 1px solid #999; box-shadow: 0 0 5px rgba( 0, 0, 0, .2 ); display: block; position: relative; cursor: pointer; background-color: #eee;}
         div.placeholder:hover{ background-color: #fff;}
@@ -43,6 +43,7 @@
     <div class="image">
         <img src="header.jpg" />
     </div>
+    <blockquote>Get it from GitHub <a href="https://github.com/spite/rstats" rel="external">https://github.com/spite/rstats</a></blockquote>
     <h2>Welcome!</h2>
     <p>rStats aims to provide a way of measuring and visualizing performance of your code, mainly in apps based on an update loop, like games or interactive experiences.</p>
     <p>It came to be when coding the <a href="http://www.clicktorelease.com/code/bumpy-metaballs/" rel="external">Bumpy metaballs</a> and <a href="http://snwbx.com" rel="external">SnowBox</a>. I realised that the performance monitors I was using (the <i>de facto</i> standard <a href="https://github.com/mrdoob/stats.js/" rel="external" >mrdoob stats.js</a> and the DevTools FPS Meter) are useful to keep an eye on your framerate and check if you're dropping frames. But when once you're doing great and keeping it under 16ms, how much are you really using? Is my shader executing in 15.99ms, or is it a way smaller fraction of the frame time? Can I have an idea of how much headroom have I still left?</p>
@@ -230,7 +231,7 @@ rS = new rStats( {
     <p>Yes, so far it is. I'd like to know everyone's opinion and suggestions!</p>
     <blockquote>Ideas? Suggestions? Hit me on <a href="http://www.twitter.com/thespite" rel="external">twitter</a> or <a href="mailto:the.spite@gmail.com" rel="external">gmail</a>!</blockquote>
     <hr/>
-    <p>Get it from github <a href="https://github.com/thingsinjars/devtools-extension" rel="external">thingsinjars/devtools-extension</a>.<br/>
+    <p>Get it from GitHub <a href="https://github.com/spite/rstats" rel="external">spite/rstats</a>.<br/>
         Jaume Sanchez | <a href="http://www.clicktorelease.com" rel="external">http://www.clicktorelease.com</a></p>
 
 </section>
