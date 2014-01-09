@@ -177,7 +177,7 @@
     <p>With this, we're telling rStats to add a stacked area chart: the value of the counter specified in <span class="code">base</span> (in this case, <span class="code">frames</span>) is the 100%, and the values for the counters in <span class="code">steps</span> (<span class="code">action1</span> and <span class="code">render</span>) will be scaled to that base.</p>
     <h2>How do I add other counters and values?</h2>
     <p>It's as easy as deciding what do you want to measure and adding calls in your code. Wrap methods and statements between <span class="code">start()</span> and <span class="code">end()</span> to measure execution time. Use <span class="code">set()</span> to store values and plot them.</p>
-    <p>Also, there's the possibility of adding plugins to your rStats object. So far there's one for three.js, and a very basic one for WebGL. Check the <a href="rStats.extras.js" >rStats.extras.js</a> to get an idea of what this does.</p>
+    <p>Also, there's the possibility of adding plugins to your rStats object. So far there's one for three.js, and a very basic one for WebGL. Check the <a href="https://github.com/spite/rstats/blob/master/src/rStats.extras.js" >rStats.extras.js</a> to get an idea of what this does.</p>
     <p>Create your rStats object as usual, and add a plugins property:</p>
     <code>glS = new glStats(); <span class="comment">// init at any point</span>
 tS = new threeStats( renderer ); <span class="comment">// init after WebGLRenderer is created</span>
