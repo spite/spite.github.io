@@ -12,6 +12,7 @@
         #container{ position: relative; height: 85px; background-color: rgba( 20, 20, 20, .1 ); margin-bottom: 14px;}
         h1{ margin-bottom: 20px; font-size: 34px;}
         h2{ margin: 30px 0 }
+        s{ color: inherit; }
         button, .button{ padding: 5px 10px; background-color: #ddd; border: 1px solid #ccc; text-align: center; border-radius: 3px; color: #444; font-weight: 400; text-transform: uppercase;}
         button:hover, .button:hover{ color: #000; background-color: #eee;}
         a{ color: inherit;font-weight: 300; }
@@ -135,10 +136,12 @@
     }
 } );</code>
     <div id="example4-placeholder" class="placeholder" style="height: 100px"></div>
-    <blockquote>Should the colour be configurable? What else do you think should be adjustable via parameters?></blockquote>
+    <p>You can also add <span class="code">color</span> and <span class="code">warningColor</span> to specify your preferred colours for each graph.</p> 
+    <blockquote><s>Should the colour be configurable?</s> What else do you think should be adjustable via parameters?</blockquote>
     <p>With these two changes, we get an alarm if the value <span class="code">frame</span> is over 16ms, which means we're exceeding our frame budget and we're starting to drop frames. Similarly, we get an alarm if the value <span class="code" >FPS</span> is below 30, which would mean we're dropping so much frames we'll have a noticeable degraded experience. You can change this value to your acceptable framerate threshold :)</p>
     <p><span class="code">values</span> is an object with the ids for the counters and their properties. The ids are case-insensitive. You provide <span class="code">caption</span>, <span class="code">below</span> and <span class="code">over</span>.</p>
-    <blockquote>Hopefully there'll be more values, like <b>min</b> and <b>max</b> values for the graph, <b>colour</b>. What else can you think of?</blockquote>
+    <blockquote>Hopefully there'll be more values, like <b>min</b> and <b>max</b> values for the graph, <s><b>colour</b></s>. What else can you think of?</blockquote>
+    <p>You can also tell the meter to show an averaged value over some time. Specify the values <span class="code">average: true</span> to enable averaging of samples. Add <span class="code">avgMs: 100</span> specifying the number of ms over which the value is averaged (default is 1000ms).</p>
     <p>Even better, we can add grouping, so values are clustered in categories:</p>
 <code>var rS = new rStats( {
     values: {
@@ -154,7 +157,7 @@
     ]</b>
 } );</code>
     <div id="example5-placeholder" class="placeholder" style="height: 150px" ></div>
-    <p>In this case, we group framerate-related values, and performance-related values.</p>
+    <p>In this case, we group framerate-related values, and performance-related values. Clicking on the name of the group open and closes that group.</p>
     <h2>Let's extract some useful data from our values</h2>
     <p>Since we're going to be measuring performance/executing time for different processes that can be split in smaller actions, it might be interesting to see the percentage of the whole time that each step is taking.</p>
 <code>var rS = new rStats( {
