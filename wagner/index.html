@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title>Wagner</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,300italic,400,400italic' rel='stylesheet' type='text/css'>
+        <style>
+        *{ box-sizing: border-box; -moz-box-sizing: border-box; font-family: 'Roboto', serif; font-weight: 300; margin: 0; padding: 0; color: #222; text-shadow: 0 1px 0 rgba( 255, 255, 255, .6 ); font-weight: 300; line-height: 1.4em;}
+        body{ font-size: 14px; line-height: 18px; padding: 20px; background-image: url( ../assets/subtle_white_feathers.png ); background-repeat: repeat;}
+        section{ width: 100%; padding: 0 20px; max-width: 800px; margin: 0 auto;}
+        #block{ position: absolute; left: 0; top: 0; width: 64px; height: 64px; background-color: #b70000; display: block; -webkit-transition: -webkit-transform 16ms linear; }
+        #container{ position: relative; height: 85px; background-color: rgba( 20, 20, 20, .1 ); margin-bottom: 14px;}
+        h1{ margin-bottom: 20px; font-size: 34px;}
+        h2{ margin: 40px 0 10px 0 }
+        button, .button{ padding: 5px 10px; background-color: #ddd; border: 1px solid #ccc; text-align: center; border-radius: 3px; color: #444; font-weight: 400; text-transform: uppercase;}
+        button:hover, .button:hover{ color: #000; background-color: #eee;}
+        a{ color: inherit;font-weight: 300; }
+        a:hover{ color: #b70000; }
+        code{ font-family: 'Inconsolata', monospace; font-size: 13px; line-height: 1.2em; white-space: pre-wrap;  color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; border-radius: 4px; margin-bottom: 10px; width: 100%;}
+        code b{ font-family: inherit; color: inherit; font-weight: bold; color: #0000a6;}
+        code span.comment{ font-family: inherit; color: inherit; font-weight: inherit; color: #00b700;}
+        p{ margin-bottom: 1em;}
+        b{ font-weight: 500;}
+        hr{ margin: 20px 0;}
+        blockquote{ font-style: italic; padding: 10px; background-color: rgba( 255, 229, 56, .2 ); color: #b70000; margin-bottom: 14px;}
+        blockquote b{ color: inherit;}
+        ul{ margin-left: 1.4em ; margin-bottom: 1em;}
+        span.code{font-family: 'Inconsolata', monospace; font-size: 13px; color: #0000b7; background-color: rgba( 255, 255, 255, .8 ); display: inline-block; padding: 10px; line-height: 0; height: 1em;}
+        p a, li a{ color: #b70000; text-decoration: none;}
+        div.image{ overflow: hidden; width: 100%; height: 200px; display: block; margin-bottom: 1em; }
+        div.image img{ position: absolute; left: 50%; margin-left: -400px;}
+        iframe{ width: 100%; height: 100%; border: none; background-color: #fff;}
+        div.placeholder{ width: 100%; margin-bottom: 1em; border: 1px solid #999; box-shadow: 0 0 5px rgba( 0, 0, 0, .2 ); display: block; position: relative; cursor: pointer; background-color: #eee;}
+        div.placeholder:hover{ background-color: #fff;}
+        div.placeholder span{ position: absolute; left: 50%; margin-left: -5em; top: 50%; margin-top: -1em; width: 10em; height: 2em; text-align: center; line-height: 2em; background-color: rgba( 255,255,255,.6); border-radius: 5px; }
+        div.placeholder:hover span{ color: #222; font-weight: 400;}
+        </style>
+    </head>
+
+   <body>
+	<section>
+		<h1>spite.github.io</h1>
+		<hr/>
+		<h2 id="wagner">Wagner</h2>
+		<p>Composer for three.js</p>
+		<div class="image">
+        	<img src="../snapshots/wagner.jpg" />
+    	</div>
+    	<ul>
+			<li>GitHub page: <a href="https://github.com/spite/Wagner" >https://github.com/spite/Wagner</a></li>
+		</ul>
+        <h3>Examples</h3>
+
+        <ul id="examples">
+        </ul>
+		<hr/>
+    <p>Jaume Sanchez | <a href="http://www.clicktorelease.com" rel="external">http://www.clicktorelease.com</a> | <a href="http://twitter.com/thespite">@thespite</a> |		<a href="https://github.com/spite/">GitHub</a> | <a href="http://codepen.io/spite/" >CodePen</a></p>
+
+	</section>
+
+    <script>
+
+var examples = [ 
+    { id: 'ascii', text: 'ASCII' },
+    { id: 'barrel-blur', text: 'Barrel blur' },
+    { id: 'box-blur', text: 'Box blur (1 pass)' },
+    { id: 'cga', text: 'CGA Display' },
+    { id: 'chromatic-aberration', text: 'Chromatic aberration' },
+    { id: 'circular-blur', text: 'Circular blur' },
+    //{ id: 'cross-fade', text: 'Cross-fade' },
+    { id: 'denoise', text: 'Denoise' },
+    { id: 'dirt-pass', text: 'Dirty lens' },
+    //{ id: 'dof', text: 'Depth of field' },
+    { id: 'dot-screen', text: 'Dot screen' },
+    //{ id: 'dragan', text: 'Dragan' },
+    { id: 'full-box-blur', text: 'Full box blur' },
+    { id: 'fxaa', text: 'FXAA (Full approXimate Anti Aliasing' },
+    { id: 'grayscale', text: 'Grayscale' },
+    { id: 'guided-box-blur', text: 'Guided box blur (1 pass)' },
+    { id: 'guided-full-box-blur', text: 'Guided full box blur' },
+    { id: 'halftone', text: 'Halftone' },
+    { id: 'halftone2', text: 'Halftone with squares' },
+    { id: 'high-pass', text: 'High-pass filter' },
+    { id: 'invert', text: 'Invert' },
+    { id: 'led', text: 'LED display' },
+    { id: 'multipass-bloom', text: 'Bloom (multipass)' },
+    //{ id: 'multipass-cross-hatching', text: 'Cross-hatching (multipass)' },
+    { id: 'old-video', text: 'Old film' },
+    { id: 'pixelate', text: 'Pixelate' },
+    { id: 'rgb-split', text: 'RGB split' },
+    { id: 'sepia', text: 'Sepia' },
+    { id: 'sobel-edge-detection', text: 'Sobel edge detection' },
+    { id: 'ssao', text: 'SSAO Screen-Space Ambient Occlusion' },
+    { id: 'toon', text: 'Toon' },
+    { id: 'vignette', text: 'Vignette' },
+    { id: 'vignette2', text: 'Vignette 2' },
+    { id: 'zoom-blur', text: 'Zoom blur' }
+];
+
+var examplesList = document.getElementById( 'examples' );
+for( var j = 0; j < examples.length; j++ ) {
+    var li = document.createElement( 'li' );
+    var a = document.createElement( 'a' );
+    a.setAttribute( 'href', 'examples/' + examples[ j ].id + '.html' );
+    a.textContent = examples[ j ].text;
+    li.appendChild( a );
+    examplesList.appendChild( li );
+}
+    </script>
+ </body>
+</html>
