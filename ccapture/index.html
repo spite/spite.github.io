@@ -101,6 +101,7 @@
 		#overlay .loading{ position: absolute; left: 50%; top: 50%; width: 10em; margin-left: -5em; height: 2em; margin-top: -1em; font-size: 18px;}
 		#overlay h2{ font-size: 24px; font-family: tahoma, sans-serif; text-align: center }
 		#overlay p{ font-size: 12px; font-family: tahoma, sans-serif; line-height: 1.4em; text-align: center}
+		#progress{ position: absolute; left: 0; top: 0; z-index: 100; height: 10px; background-color: #b70000;}
 		</style>
 	</head>
 	<body>
@@ -109,6 +110,10 @@
 		<h1>CCapture.js example</h1><h2>Game of Life in 3D</h2>
 		<p>Example of <a href="https://github.com/spite/ccapture.js" >ccapture.js</a> using <a href="http://www.clicktorelease.com/code/conway3d/" >Game of Life in 3D</a>. <a href="https://github.com/spite/ccapture.js" >Check out what's this all about.</a></p>
 		<p id="support"></p>
+		
+		<input type="radio" name="encoder" value="webm" checked="checked" >WebM</input>
+		<input type="radio" name="encoder" value="gif" >GIF</input>
+
 		<a class="button" href="#" id="start-capturing-button" >Start recording</a>
 		<a class="button" href="#" id="download-video-button" >Stop recording and view video</a>
 	</div>
@@ -116,6 +121,8 @@
 	<a href="https://github.com/spite/ccapture.js" rel="external" ><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/camo.github.com/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
 	
 	<div id="container" ></div>
+
+	<div id="progress"></div>
 
 	<div id="overlay">
 		<div class="loading" >
@@ -129,8 +136,10 @@
 		</ul>
 	</div>
 	
-	<script type="text/javascript" src="js/CCapture.js"></script>
+	<script type="text/javascript" src="js/CCapture.min.js"></script>
 	<script type="text/javascript" src="js/Whammy.js"></script>
+	<script type="text/javascript" src="js/gif.js"></script>
+
 	<script type="text/javascript" src="js/Three.js"></script>
 	<script type="text/javascript" src="js/Tween.js"></script>
 	<script type="text/javascript" src="js/Detector.js"></script>
@@ -183,11 +192,11 @@
 			<br/>This is the <b>canvas</b> version.';
 		} else {
 			document.getElementById( 'support' ).innerHTML = 'This is the <b>canvas</b> version.\
-		<a href="http://www.clicktorelease.com/code/conway3d_ccapture" >Check out the WebGL version.</a>';
+		<a href="http://spite.github.io/ccapture/#webgl" >Check out the WebGL version.</a>';
 		}
 	} else {	
 			document.getElementById( 'support' ).innerHTML = 'This is the <b>WebGL</b> version.\
-		<a href="http://www.clicktorelease.com/code/conway3d_ccapture#canvas" >Check out the canvas version.</a>';
+		<a href="http://spite.github.io/ccapture/#canvas" >Check out the canvas version.</a>';
 	}
 	
 	function checkWebP() {
@@ -306,12 +315,21 @@
 		startTime = d.getTime();
 		lastTime = startTime;
 		
-		capturer = new CCapture();
-		
 		var sCB = document.getElementById( 'start-capturing-button' ),
-			dVB = document.getElementById( 'download-video-button' );
-		
+			dVB = document.getElementById( 'download-video-button' ),
+			progress = document.getElementById( 'progress' );
+
 		sCB.addEventListener( 'click', function( e ) {
+
+			capturer = new CCapture( { 
+				verbose: true, 
+				framerate: 60,
+				quality: 80,
+				format: document.querySelector('input[name="encoder"]:checked').value,
+				workersPath: 'js/',
+				onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+			} );
+
 			capturer.start();
 			this.style.display = 'none';
 			dVB.style.display = 'block';
@@ -320,7 +338,7 @@
 		
 		dVB.addEventListener( 'click', function( e ) {
 
-			overlay.classList.add( 'visible' );
+			/*overlay.classList.add( 'visible' );
 
 			var ul = overlay.querySelector( 'ul' );
 			ul.classList.add( 'hidden' );
@@ -336,12 +354,12 @@
 
 				ul.classList.remove( 'hidden' );
 			
-			} );
+			} );*/
 
-			var url = capturer.save();
-			v.src = url
-			v.controls = true;
-			playingBack = true;
+			capturer.stop();
+			capturer.save( function( blob ) {
+				window.location = blob;
+			});
 
 		}, false );
 
@@ -451,7 +469,7 @@
 		
 		}
 
-		capturer.capture( renderer.domElement );
+		if( capturer ) capturer.capture( renderer.domElement );
 	}
 	
 	</script>
