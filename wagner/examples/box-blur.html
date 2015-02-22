@@ -35,7 +35,8 @@
 <script src="http://spite.github.io/rstats/rStats.extras.js" ></script>-->
 <script src="../Wagner.js"></script>
 <script src="../Wagner.base.js"></script>
-<script src="../Wagner.experimental.js"></script>
+<!--<script src="Wagner.experimental.js"></script>-->
+<script src="../js/OrbitControls.js"></script>
 <script src="../ShaderLoader.js"></script>
 <script src="../js/debugTools.js"></script>
 
@@ -60,8 +61,8 @@ function initPass() {
 
 	gui = new DAT.GUI();
 
-	gui.add( blurPass.params.delta, 'x' ).min(0).max(.1);
-	gui.add( blurPass.params.delta, 'y' ).min(0).max(.1);
+	gui.add( blurPass.params.delta, 'x' ).min(1).max(100);
+	gui.add( blurPass.params.delta, 'y' ).min(1).max(100);
 	gui.open();
 
 }

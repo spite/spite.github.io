@@ -9,7 +9,7 @@ uniform int mode;
 uniform int sizeMode;
 uniform float opacity;
 
-vec2 vUv2 = vUv;
+vec2 vUv2;
 
 float applyOverlayToChannel( float base, float blend ) {
 
@@ -55,18 +55,22 @@ float applyLinearLightToChannel( float base, float blend ) {
 
 void main() {
 
+	vUv2 = vUv;
+	
 	if( sizeMode == 1 ) {
 		
 		if( aspectRatio2 > aspectRatio ) {
-			vUv2.x *= aspectRatio / aspectRatio2;
-			vUv2.x += .5 * ( 1. - aspectRatio / aspectRatio2 );
+			vUv2.x = vUv.x * aspectRatio / aspectRatio2;
+			vUv2.x += .5 * ( 1. - aspectRatio / aspectRatio2 );	
+			vUv2.y = vUv.y;
 		}
 
 		if( aspectRatio2 < aspectRatio ) {
-			vUv2.y *= aspectRatio2 / aspectRatio;
+			vUv2.x = vUv.x;
+			vUv2.y = vUv.y * aspectRatio2 / aspectRatio;
 			vUv2.y += .5 * ( 1. - aspectRatio2 / aspectRatio );
 		}
-			
+
 	}
 
 	vec4 base = texture2D( tInput, vUv );
@@ -168,6 +172,7 @@ void main() {
 			applyOverlayToChannel( base.a, blend.a )
 		);
 		gl_FragColor = gl_FragColor * opacity + base * ( 1. - opacity );
+	
 		return;
 
 	}

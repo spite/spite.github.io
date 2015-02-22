@@ -35,7 +35,8 @@
 <script src="http://spite.github.io/rstats/rStats.extras.js" ></script>-->
 <script src="../Wagner.js"></script>
 <script src="../Wagner.base.js"></script>
-<script src="../Wagner.experimental.js"></script>
+<!--<script src="Wagner.experimental.js"></script>-->
+<script src="../js/OrbitControls.js"></script>
 <script src="../ShaderLoader.js"></script>
 <script src="../js/debugTools.js"></script>
 
@@ -61,6 +62,10 @@ function initPass() {
 	composer = new WAGNER.Composer( renderer, { useRGBA: false } );
 	blurPass = new WAGNER.GuidedFullBoxBlurPass();
 
+	blurPass.params.from = .94;
+	blurPass.params.to = .97;
+	blurPass.params.invertBiasMap = true;
+	
 	gui = new DAT.GUI();
 
 	gui.add( blurPass.params, 'invertBiasMap' );

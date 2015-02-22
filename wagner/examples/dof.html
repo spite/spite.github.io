@@ -28,16 +28,18 @@
 
 		<div id="container"></div>
 		<a href="#" id="fullscreenBtn" >Go fullscreen</a>
-		<div id="about" ><b>Wagner</b> DOF Pass</div>
+		<div id="about" ><b>Wagner</b> Simple DOF (Depth of Field) Pass</div>
 
 <script src="../js/three.min.js"></script>
 <!--<script src="http://spite.github.io/rstats/rStats.js" ></script>
 <script src="http://spite.github.io/rstats/rStats.extras.js" ></script>-->
 <script src="../Wagner.js"></script>
 <script src="../Wagner.base.js"></script>
-<script src="../Wagner.experimental.js"></script>
+<!--<script src="Wagner.experimental.js"></script>-->
+<script src="../js/OrbitControls.js"></script>
 <script src="../ShaderLoader.js"></script>
 <script src="../js/debugTools.js"></script>
+<script src="../js/OrbitControls.js"></script>
 
 <script src="DAT.GUI.min.js"></script>
 <script src="main.js"></script>
@@ -50,24 +52,28 @@ WAGNER.assetsPath = '../assets/';
 
 var dofPass;
 var gui;
-var glowTexture;
+var depthTexture;
 
 var depthMaterial = new THREE.MeshBasicMaterial();
 
 function initPass() {
 
-	createTeapot();
+	createCubes();
+	
+	composer = new WAGNER.Composer( renderer, { useRGBA: false } );
+	dofPass = new WAGNER.GuidedFullBoxBlurPass();
 
-	composer = new WAGNER.Composer( renderer, { useRGBA: true } );
-	dofPass = new WAGNER.MultiPassDOFPass();
+	dofPass.params.from = .5;
+	dofPass.params.to = 1.;
 
-	/*gui = new DAT.GUI();
+	gui = new DAT.GUI();
 
-	gui.add( blurPass.params, 'invertBiasMap' );
-	gui.add( blurPass.params, 'from' ).min(0).max(1);
-	gui.add( blurPass.params, 'to' ).min(0).max(1);
-	gui.add( blurPass.params, 'amount' ).min(0).max(100);
-	gui.open();*/
+	gui.add( dofPass.params, 'from' ).min(0).max(1);
+	gui.add( dofPass.params, 'to' ).min(0).max(1);
+	gui.add( dofPass.params, 'amount' ).min(0).max(100);
+	gui.add( dofPass.params, 'invertBiasMap' );
+
+	gui.open();
 
 	var sL = new ShaderLoader()
 	sL.add( 'depth-vs', '../vertex-shaders/packed-depth-vs.glsl' );
@@ -85,6 +91,7 @@ function initPass() {
 		} );
 	} );
 
+	scene.children[ 3 ].material = new THREE.MeshNormalMaterial();
 }
 
 function resizePass() {
@@ -98,14 +105,16 @@ function renderPass() {
 		
 	composer.reset();
 
+	depthMaterial.side = THREE.DoubleSide;
 	scene.overrideMaterial = depthMaterial;
 	composer.render( scene, camera, null, depthTexture );
-	dofPass.params.tDepth = depthTexture;
+	dofPass.params.tBias = depthTexture;
 
 	scene.overrideMaterial = null;
 	composer.render( scene, camera );
 
 	composer.pass( dofPass );
+
 	composer.toScreen();
 	
 }

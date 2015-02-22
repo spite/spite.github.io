@@ -35,9 +35,11 @@
 <script src="http://spite.github.io/rstats/rStats.extras.js" ></script>-->
 <script src="../Wagner.js"></script>
 <script src="../Wagner.base.js"></script>
-<script src="../Wagner.experimental.js"></script>
+<!--<script src="Wagner.experimental.js"></script>-->
+<script src="../js/OrbitControls.js"></script>
 <script src="../ShaderLoader.js"></script>
 <script src="../js/debugTools.js"></script>
+<script src="../js/OrbitControls.js"></script>
 
 <script src="DAT.GUI.min.js"></script>
 <script src="main.js"></script>
@@ -57,20 +59,22 @@ var glowMaterial = new THREE.MeshBasicMaterial( {
 	map: THREE.ImageUtils.loadTexture( '../assets/textures/1324-glow.jpg' ),
 } );
 
-glowMaterial.map.repeat = new THREE.Vector2( 10, 10 );
+glowMaterial.map.repeat = new THREE.Vector2( 1, 1 );
 glowMaterial.map.wrapS = glowMaterial.map.wrapT = THREE.RepeatWrapping;
 
 function initPass() {
 
-	createTeapot();
+	//createTeapot();
+	createCubes();
 
 	composer = new WAGNER.Composer( renderer, { useRGBA: false } );
 	bloomPass = new WAGNER.MultiPassBloomPass();
-	bloomPass.params.strength = .5;
+	bloomPass.params.blurAmount = 1.5;
+	bloomPass.params.zoomBlurStrength = 1;
 
 	gui = new DAT.GUI();
 
-	gui.add( bloomPass.params, 'blurAmount' ).min(0).max(100);
+	gui.add( bloomPass.params, 'blurAmount' ).min(0).max(2);
 	gui.add( bloomPass.params, 'applyZoomBlur' );
 	gui.add( bloomPass.params, 'zoomBlurStrength' ).min(0).max(2);
 	gui.add( bloomPass.params, 'useTexture' );
