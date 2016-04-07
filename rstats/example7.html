@@ -43,6 +43,7 @@ window.addEventListener( 'load', function() {
     tS = new threeStats( renderer ); // init after WebGLRenderer is created
 
     rS = new rStats( {
+        userTimingAPI: true,
         values: {
             frame: { caption: 'Total frame time (ms)', over: 16 },
             fps: { caption: 'Framerate (FPS)', below: 30 },
